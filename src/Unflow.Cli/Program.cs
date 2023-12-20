@@ -9,13 +9,14 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var downloader = new Downloader();
-        await downloader.Connect();
-        var group = new GroupEntity()
-        {
-            GroupName = "eternal-september.test",
-            LastDownloadedArticleNumber = 0,
-        };
-        await downloader.DownloadGroup(group);
+        IRemoteNntpClient client = new RemoteNntpClient();
+        await client.ConnectAsync("news.eternal-september.org", 119, false);
+        var downloader = new PartialHeaderDownloader(client);
+        
+        var localGroupInfo = new Group { Name = "eternal-september.test" };
+
+        var remoteGroupInfo = client.GetGroupInfo(localGroupInfo.Name);
+        downloader.DownloadPartialHeaders(remoteGroupInfo, localGroupInfo);
+        downloader.DownloadPartialHeaders(remoteGroupInfo, localGroupInfo);
     }
 }

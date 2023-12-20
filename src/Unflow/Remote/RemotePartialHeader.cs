@@ -1,10 +1,10 @@
 namespace Unflow.Cli;
 
-public class XoverItemResponse
+public class RemotePartialHeader
 {
     public bool Valid { get; private set; }
 
-    public XoverItemResponse(string line)
+    public RemotePartialHeader(string line)
     {
         // Article number: 12345
         // Subject: Re: Example Subject
