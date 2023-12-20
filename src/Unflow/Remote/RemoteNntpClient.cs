@@ -18,18 +18,29 @@ public class RemoteNntpClient : IRemoteNntpClient
 
     public RemoteGroupInfo GetGroupInfo(string name)
     {
-        var nativeRemoteGroup = _client.Group(name);
-        return new RemoteGroupInfo
-        {
-            Name = nativeRemoteGroup.Group.Name,
-            LowestAvailableArticleNumber = nativeRemoteGroup.Group.LowWaterMark,
-            HighestAvailableArticleNumber = nativeRemoteGroup.Group.HighWaterMark
-        };
+        var response = _client.Group(name);
+        return ConvertToRemoteGroupInfo(response.Group);
     }
-
+    
     public RemotePartialHeader[] GetPartialHeaderForGroup(string name, ArticleRange range)
     {
         var response = _client.Xover(new NntpArticleRange(range.Start, range.End));
         return response.Lines.Select(x => new RemotePartialHeader(x)).OrderBy(x => x.ArticleNumber).ToArray();
+    }
+
+    public RemoteGroupInfo[] GetGroups()
+    {
+        var response = _client.ListActive();
+        return response.Groups.Select(x => ConvertToRemoteGroupInfo(x)).ToArray();
+    }
+    
+    private static RemoteGroupInfo ConvertToRemoteGroupInfo(NntpGroup nativeRemoteGroup)
+    {
+        return new()
+        {
+            Name = nativeRemoteGroup.Name,
+            LowestAvailableArticleNumber = nativeRemoteGroup.LowWaterMark,
+            HighestAvailableArticleNumber = nativeRemoteGroup.HighWaterMark
+        };
     }
 }

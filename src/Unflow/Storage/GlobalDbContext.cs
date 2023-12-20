@@ -14,7 +14,12 @@ public class GlobalDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=global.db",
+        var userDataDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var unflowDataDir = Path.Combine(userDataDir, "unflow");
+        Directory.CreateDirectory(unflowDataDir);
+        var dataFile = Path.Combine(unflowDataDir, "global.db");
+
+        optionsBuilder.UseSqlite($"Data Source={dataFile}",
             b => b.MigrationsAssembly("Unflow.DbMigrations"));
     }
 
