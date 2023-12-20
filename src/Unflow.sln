@@ -8,7 +8,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unflow.Cli", "Unflow.Cli\Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unflow.Tests", "Unflow.Tests\Unflow.Tests.csproj", "{99A09F18-89D4-4C29-AF8C-5950273A2432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unflow.DbMigrations", "Unflow.DbMigrations\Unflow.DbMigrations.csproj", "{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unflow.GlobalDbMigrations", "Unflow.GlobalDbMigrations\Unflow.GlobalDbMigrations.csproj", "{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unflow.GroupDbMigrations", "Unflow.GroupDbMigrations\Unflow.GroupDbMigrations.csproj", "{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbMigrations", "DbMigrations", "{1428CE3A-C6E7-4671-956B-7C47CF521CCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +40,13 @@ Global
 		{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3A6E2959-9F84-45BB-B248-5B40C6B8FD4B} = {1428CE3A-C6E7-4671-956B-7C47CF521CCF}
+		{417EA6AB-0FBC-4BA2-BA58-25A995E21EAB} = {1428CE3A-C6E7-4671-956B-7C47CF521CCF}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Unflow.Cli;
+namespace Unflow;
 
 public class GlobalContextFactory : IDbContextFactory<GlobalDbContext>
 {

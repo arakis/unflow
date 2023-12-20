@@ -15,7 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Unflow.DbMigrations\Unflow.DbMigrations.csproj" />
+      <ProjectReference Include="..\Unflow.GlobalDbMigrations\Unflow.GlobalDbMigrations.csproj" />
+      <ProjectReference Include="..\Unflow.GroupDbMigrations\Unflow.GroupDbMigrations.csproj" />
       <ProjectReference Include="..\Unflow\Unflow.csproj" />
     </ItemGroup>
 

@@ -21,7 +21,7 @@ public class RemoteNntpClient : IRemoteNntpClient
         var response = _client.Group(name);
         return ConvertToRemoteGroupInfo(response.Group);
     }
-    
+
     public RemotePartialHeader[] GetPartialHeaderForGroup(string name, ArticleRange range)
     {
         var response = _client.Xover(new NntpArticleRange(range.Start, range.End));
@@ -33,7 +33,7 @@ public class RemoteNntpClient : IRemoteNntpClient
         var response = _client.ListActive();
         return response.Groups.Select(x => ConvertToRemoteGroupInfo(x)).ToArray();
     }
-    
+
     private static RemoteGroupInfo ConvertToRemoteGroupInfo(NntpGroup nativeRemoteGroup)
     {
         return new()
@@ -42,5 +42,11 @@ public class RemoteNntpClient : IRemoteNntpClient
             LowestAvailableArticleNumber = nativeRemoteGroup.LowWaterMark,
             HighestAvailableArticleNumber = nativeRemoteGroup.HighWaterMark
         };
+    }
+
+    public void Dispose()
+    {
+        _connection?.Dispose();
+        _connection = null!;
     }
 }

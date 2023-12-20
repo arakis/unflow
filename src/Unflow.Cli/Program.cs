@@ -10,35 +10,47 @@ namespace Unflow.Cli;
 class Program
 {
     private static IDbContextFactory<GlobalDbContext> _factory;
+    private static GroupContextFactoryLocator _groupContextFactoryLocator;
+
     static async Task Main(string[] args)
     {
         _factory = new GlobalContextFactory();
+        _groupContextFactoryLocator = new GroupContextFactoryLocator();
+
         await MigrateDatabase();
         await DownloadGroupNames();
+        await DownloadPartialHeaders();
     }
 
     private static async Task MigrateDatabase()
     {
         using var context = _factory.CreateDbContext();
         await context.Database.MigrateAsync();
+        Parallel.ForEach(context.Group, async group =>
+        {
+            var groupContext = await _groupContextFactoryLocator.GetGroupDbContextFactory(group).CreateDbContextAsync();
+            await groupContext.Database.MigrateAsync();
+        });
     }
 
     private async static Task DownloadGroupNames()
     {
-        var client = await CreateClient();
+        using IRemoteNntpClient client = await CreateClient();
         var downloader = new GroupNameDownloader(_factory, client);
         await downloader.DownloadGroupNames();
     }
 
     private async static Task DownloadPartialHeaders()
     {
-        var client = await CreateClient();
-        var downloader = new PartialHeaderDownloader(client);
+        using IRemoteNntpClient client = await CreateClient();
+        var downloader = new PartialHeaderDownloader(_groupContextFactoryLocator, client);
 
-        var localGroupInfo = new Group { Name = "eternal-september.test" };
-
-        var remoteGroupInfo = client.GetGroupInfo(localGroupInfo.Name);
-        downloader.DownloadPartialHeaders(remoteGroupInfo, localGroupInfo);
+        using var context = _factory.CreateDbContext();
+        foreach (var group in context.Group)
+        {
+            var remoteGroupInfo = client.GetGroupInfo(group.Name);
+            await downloader.DownloadPartialHeaders(remoteGroupInfo, group);
+        }
     }
 
     private static async Task<IRemoteNntpClient> CreateClient()

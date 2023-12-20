@@ -1,6 +1,6 @@
 using Unflow.Cli;
 
-public interface IRemoteNntpClient
+public interface IRemoteNntpClient : IDisposable
 {
     Task<bool> ConnectAsync(string hostname, int port, bool useSsl);
     RemoteGroupInfo GetGroupInfo(string name);
