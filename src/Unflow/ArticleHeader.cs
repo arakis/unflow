@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-[Index(nameof(Article.Id), IsUnique = true)]
-[Index(nameof(Article.MessageId), IsUnique = true)]
-public class Article
+[Index(nameof(ArticleHeader.Id), IsUnique = true)]
+[Index(nameof(ArticleHeader.MessageId), IsUnique = true)]
+public class ArticleHeader
 {
     public Guid Id { get; set; }
 

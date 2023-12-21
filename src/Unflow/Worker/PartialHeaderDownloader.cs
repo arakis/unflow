@@ -103,7 +103,7 @@ public class PartialHeaderDownloader
         var article = await groupDbContext.Article.FirstOrDefaultAsync(x => x.ArticleNumber == remotePartialHeader.ArticleNumber);
         if (article == null)
         {
-            article = new Article()
+            article = new ArticleHeader()
             {
                 Id = SecureGuidGenerator.Default.NewGuid(),
                 ArticleNumber = remotePartialHeader.ArticleNumber,
