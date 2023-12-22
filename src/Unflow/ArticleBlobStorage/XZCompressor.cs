@@ -14,16 +14,22 @@ public class XZCompressor : ICompressor
         // Compress in single-threaded mode
         XZCompressOptions compOpts = new XZCompressOptions
         {
-            Level = LzmaCompLevel.Default,
+            Level = LzmaCompLevel.Level9,
+            ExtremeFlag = true,
         };
 
         using (var fsOrigin = new MemoryStream(inputData))
-        using (var fsComp = new MemoryStream())
-        using (var zs = new XZStream(fsComp, compOpts))
         {
-            fsOrigin.CopyTo(zs);
-            zs.Flush();
-            return fsComp.ToArray();
+            using (var fsComp = new MemoryStream())
+            {
+                using (XZStream zs = new XZStream(fsComp, compOpts))
+                {
+                    fsOrigin.CopyTo(zs);
+                    zs.Flush();
+                }
+
+                return fsComp.ToArray();
+            }
         }
     }
 
@@ -31,13 +37,18 @@ public class XZCompressor : ICompressor
     {
         XZDecompressOptions decompOpts = new XZDecompressOptions();
 
-        using (var fsDecomp = new MemoryStream())
         using (var fsComp = new MemoryStream(inputData))
-        using (var zs = new XZStream(fsComp, decompOpts))
         {
-            zs.CopyTo(fsDecomp);
-            fsDecomp.Flush();
-            return fsDecomp.ToArray();
+            using (var fsDecomp = new MemoryStream())
+            {
+                using (var zs = new XZStream(fsComp, decompOpts))
+                {
+                    zs.CopyTo(fsDecomp);
+                    zs.Flush();
+                }
+
+                return fsDecomp.ToArray();
+            }
         }
     }
 }
