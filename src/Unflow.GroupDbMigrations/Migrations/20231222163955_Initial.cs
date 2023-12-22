@@ -12,35 +12,36 @@ namespace Unflow.DbGroupMigrations.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Article",
+                name: "ArticleHeader",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     References = table.Column<string>(type: "TEXT", nullable: false),
                     MessageId = table.Column<string>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Author = table.Column<string>(type: "TEXT", nullable: false),
                     Subject = table.Column<string>(type: "TEXT", nullable: false),
                     ArticleNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     HeaderDownloadedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     BodyDownloadedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    BlobId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BlogOffset = table.Column<int>(type: "INTEGER", nullable: false)
+                    BlobId = table.Column<int>(type: "INTEGER", nullable: true),
+                    BlogOffset = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.PrimaryKey("PK_ArticleHeader", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_Id",
-                table: "Article",
+                name: "IX_ArticleHeader_Id",
+                table: "ArticleHeader",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_MessageId",
-                table: "Article",
+                name: "IX_ArticleHeader_MessageId",
+                table: "ArticleHeader",
                 column: "MessageId",
                 unique: true);
         }
@@ -49,7 +50,7 @@ namespace Unflow.DbGroupMigrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Article");
+                name: "ArticleHeader");
         }
     }
 }

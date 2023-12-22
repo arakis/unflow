@@ -108,7 +108,7 @@ public class PartialHeaderDownloader
                 Id = SecureGuidGenerator.Default.NewGuid(),
                 ArticleNumber = remotePartialHeader.ArticleNumber,
                 Author = remotePartialHeader.Author,
-                Date = remotePartialHeader.Date,
+                Date = remotePartialHeader.Date.UtcDateTime,
                 MessageId = remotePartialHeader.MessageId,
                 References = remotePartialHeader.References,
                 Subject = remotePartialHeader.Subject,

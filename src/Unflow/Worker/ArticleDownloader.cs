@@ -50,6 +50,7 @@ public class ArticleDownloader
             await ctx.SaveChangesAsync();
             n++;
         }
+
         return n;
     }
 }

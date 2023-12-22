@@ -20,6 +20,7 @@ class Program
         await MigrateDatabase();
         await DownloadGroupNames();
         await DownloadPartialHeaders();
+        await DownloadArticles();
     }
 
     private static async Task MigrateDatabase()
@@ -51,6 +52,16 @@ class Program
             var remoteGroupInfo = client.GetGroupInfo(group.Name);
             await downloader.DownloadPartialHeaders(remoteGroupInfo, group);
         }
+    }
+
+    private async static Task DownloadArticles()
+    {
+        using IRemoteNntpClient client = await CreateClient();
+        var downloader = new ArticleDownloader(_groupContextFactoryLocator, client);
+
+        using var context = _factory.CreateDbContext();
+        foreach (var group in context.Group)
+            await downloader.DownloadArticles(group);
     }
 
     private static async Task<IRemoteNntpClient> CreateClient()

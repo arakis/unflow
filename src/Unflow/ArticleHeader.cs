@@ -1,3 +1,6 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 [Index(nameof(ArticleHeader.Id), IsUnique = true)]
@@ -10,7 +13,7 @@ public class ArticleHeader
 
     public string MessageId { get; set; }
 
-    public DateTimeOffset Date { get; set; }
+    public DateTime Date { get; set; }
 
     public string Author { get; set; }
 

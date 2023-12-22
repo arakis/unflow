@@ -11,7 +11,7 @@ using Unflow;
 namespace Unflow.DbGroupMigrations.Migrations
 {
     [DbContext(typeof(GroupDbContext))]
-    [Migration("20231220172559_Initial")]
+    [Migration("20231222163955_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Unflow.DbGroupMigrations.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
-            modelBuilder.Entity("Article", b =>
+            modelBuilder.Entity("ArticleHeader", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,16 +33,16 @@ namespace Unflow.DbGroupMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BlobId")
+                    b.Property<int?>("BlobId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BlogOffset")
+                    b.Property<long?>("BlogOffset")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset?>("BodyDownloadedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("HeaderDownloadedAt")
@@ -50,6 +50,9 @@ namespace Unflow.DbGroupMigrations.Migrations
 
                     b.Property<string>("MessageId")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("References")
@@ -68,7 +71,7 @@ namespace Unflow.DbGroupMigrations.Migrations
                     b.HasIndex("MessageId")
                         .IsUnique();
 
-                    b.ToTable("Article");
+                    b.ToTable("ArticleHeader");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,8 +17,7 @@ public class GroupDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dataFile = Path.Combine(DirHelper.GetGroupDataDir(_group), "global.db");
-
+        var dataFile = Path.Combine(DirHelper.GetGroupDataDir(_group), "group.db");
         optionsBuilder.UseSqlite($"Data Source={dataFile}",
             b => b.MigrationsAssembly("Unflow.GroupDbMigrations"));
     }
