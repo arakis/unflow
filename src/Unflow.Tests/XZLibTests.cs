@@ -1,12 +1,15 @@
+using JetBrains.Annotations;
 using Joveler.Compression.XZ;
+using Unflow.ArticleBlobStorage;
 
 namespace Unflow.Tests.ArticleBlobStorage;
 
+[TestSubject(typeof(XZStream))]
 public class XZLibTests
 {
     static XZLibTests()
     {
-        XZInit.GlobalInit();
+        XZInitSingleton.Init();
     }
 
     [Fact]

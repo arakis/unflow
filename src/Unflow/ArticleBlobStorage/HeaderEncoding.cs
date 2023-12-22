@@ -36,19 +36,20 @@ public class HeaderEncoding
     {
         var idx = originalHeader.IndexOf(':');
         if (idx == -1)
-            return originalHeader;
+            return originalHeader.TrimEnd();
 
         var key = originalHeader.Substring(0, idx);
 
         if (_DecodedToEncoded.TryGetValue(key, out var encodedKey))
-            return encodedKey + ":" + (originalHeader.Substring(idx + 1).Trim());
+            return encodedKey + ";" + (originalHeader.Substring(idx + 1).Trim());
 
-        return "_:" + originalHeader.Trim(); // unknown header
+        return originalHeader.Trim(); // unknown header
     }
 
     public string Decode(string encodedHeader)
     {
-        var idx = encodedHeader.IndexOf(':');
+        encodedHeader = encodedHeader.TrimEnd();
+        var idx = encodedHeader.IndexOf(';');
         if (idx == -1)
             return encodedHeader;
 
@@ -57,6 +58,6 @@ public class HeaderEncoding
         if (_EncodedToDecoded.TryGetValue(key, out var decodedKey))
             return decodedKey + ": " + encodedHeader.Substring(idx + 1);
 
-        return encodedHeader.Substring(idx + 1);
+        return encodedHeader;
     }
 }

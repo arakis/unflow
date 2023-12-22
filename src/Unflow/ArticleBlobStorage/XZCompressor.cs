@@ -6,10 +6,10 @@ public class XZCompressor : ICompressor
 {
     static XZCompressor()
     {
-        XZInit.GlobalInit();
+        XZInitSingleton.Init();
     }
 
-    public byte[] Compress(byte[] inputData)
+    public async Task<byte[]> Compress(byte[] inputData)
     {
         // Compress in single-threaded mode
         XZCompressOptions compOpts = new XZCompressOptions
@@ -24,8 +24,8 @@ public class XZCompressor : ICompressor
             {
                 using (XZStream zs = new XZStream(fsComp, compOpts))
                 {
-                    fsOrigin.CopyTo(zs);
-                    zs.Flush();
+                    await fsOrigin.CopyToAsync(zs);
+                    await zs.FlushAsync();
                 }
 
                 return fsComp.ToArray();
@@ -33,7 +33,7 @@ public class XZCompressor : ICompressor
         }
     }
 
-    public byte[] Decompress(byte[] inputData)
+    public async Task<byte[]> Decompress(byte[] inputData)
     {
         XZDecompressOptions decompOpts = new XZDecompressOptions();
 
@@ -43,8 +43,8 @@ public class XZCompressor : ICompressor
             {
                 using (var zs = new XZStream(fsComp, decompOpts))
                 {
-                    zs.CopyTo(fsDecomp);
-                    zs.Flush();
+                    await zs.CopyToAsync(fsDecomp);
+                    await zs.FlushAsync();
                 }
 
                 return fsDecomp.ToArray();

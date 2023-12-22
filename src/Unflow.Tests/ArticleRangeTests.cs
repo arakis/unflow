@@ -1,5 +1,9 @@
+using JetBrains.Annotations;
+using Unflow.ArticleBlobStorage;
+
 namespace Unflow.Tests;
 
+[TestSubject(typeof(ArticleRange))]
 public class ArticleRangeTests
 {
     [Fact]

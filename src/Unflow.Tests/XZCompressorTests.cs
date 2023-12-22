@@ -8,14 +8,14 @@ namespace Unflow.Tests.ArticleBlobStorage;
 public class XZCompressorTests
 {
     [Fact]
-    public void Compress_WithValidInput_ReturnsCompressedData()
+    public async Task Compress_WithValidInput_ReturnsCompressedData()
     {
         // Arrange
         var compressor = new XZCompressor();
         var inputData = Encoding.UTF8.GetBytes("12345");
 
         // Act
-        var result = compressor.Compress(inputData);
+        var result = await compressor.Compress(inputData);
 
         // Assert
         Assert.NotEqual(0, result.Length);
@@ -23,15 +23,15 @@ public class XZCompressorTests
     }
 
     [Fact]
-    public void Decompress_WithCompressedInput_ReturnsOriginalData()
+    public async Task Decompress_WithCompressedInput_ReturnsOriginalData()
     {
         // Arrange
         var compressor = new XZCompressor();
         var inputData = new byte[] { 1, 2, 3, 4, 5 };
-        var compressedData = compressor.Compress(inputData);
+        var compressedData = await compressor.Compress(inputData);
 
         // Act
-        var result = compressor.Decompress(compressedData);
+        var result = await compressor.Decompress(compressedData);
 
         // Assert
         Assert.Equal(inputData, result);

@@ -1,7 +1,8 @@
-namespace Unflow.ArticleBlobStorage;
-
-public interface ICompressor
+namespace Unflow.ArticleBlobStorage
 {
-    byte[] Compress(byte[] data);
-    byte[] Decompress(byte[] data);
+    public interface ICompressor
+    {
+        Task<byte[]> Compress(byte[] data);
+        Task<byte[]> Decompress(byte[] data);
+    }
 }

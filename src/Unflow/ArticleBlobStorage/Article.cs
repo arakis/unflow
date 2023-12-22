@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Unflow.ArticleBlobStorage;
 
 public class Article
@@ -6,7 +8,14 @@ public class Article
     public string[] Body { get; set; } = null!;
 
     public string ToString(HeaderEncoding headerEncoding)
-        => string.Join("\n", Headers.Select(x => headerEncoding.Encode(x))) + "\n" + string.Join("\n", Body);
+    {
+        var sb = new StringBuilder();
+        sb.Append(string.Join("\n", Headers.Select(x => headerEncoding.Encode(x))));
+        if (Body.Length > 0)
+            sb.Append("\n\n");
+        sb.Append(string.Join("\n", Body));
+        return sb.ToString();
+    }
 
     public static Article Parse(string text, HeaderEncoding headerEncoding)
     {
