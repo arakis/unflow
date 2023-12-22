@@ -1,3 +1,4 @@
+using Unflow.ArticleBlobStorage;
 using Unflow.Cli;
 
 public interface IRemoteNntpClient : IDisposable
@@ -6,4 +7,5 @@ public interface IRemoteNntpClient : IDisposable
     RemoteGroupInfo GetGroupInfo(string name);
     RemotePartialHeader[] GetPartialHeaderForGroup(string name, ArticleRange range);
     RemoteGroupInfo[] GetGroups();
+    Article GetArticle(string messageId);
 }

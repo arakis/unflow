@@ -100,7 +100,7 @@ public class PartialHeaderDownloader
 
     private async Task ProcessPartialHeader(RemotePartialHeader remotePartialHeader, GroupDbContext groupDbContext)
     {
-        var article = await groupDbContext.Article.FirstOrDefaultAsync(x => x.ArticleNumber == remotePartialHeader.ArticleNumber);
+        var article = await groupDbContext.ArticleHeader.FirstOrDefaultAsync(x => x.ArticleNumber == remotePartialHeader.ArticleNumber);
         if (article == null)
         {
             article = new ArticleHeader()
@@ -114,7 +114,7 @@ public class PartialHeaderDownloader
                 Subject = remotePartialHeader.Subject,
                 HeaderDownloadedAt = DateTimeOffset.UtcNow
             };
-            groupDbContext.Article.Add(article);
+            groupDbContext.ArticleHeader.Add(article);
         }
     }
 }

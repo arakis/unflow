@@ -22,6 +22,6 @@ public class ArticleHeader
     public DateTimeOffset? BodyDownloadedAt { get; set; }
 
     public int? BlobId { get; set; }
-    public int? BlogOffset { get; set; }
+    public long? BlogOffset { get; set; }
     public Guid? ParentId { get; set; }
 }

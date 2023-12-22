@@ -17,6 +17,29 @@ public class Article
         return sb.ToString();
     }
 
+    public static Article ParseNative(IEnumerable<string> lines)
+    {
+        var headers = new List<string>();
+        var body = new List<string>();
+
+        var addToBody = false;
+        foreach (var line in lines)
+        {
+            if (line == string.Empty)
+                addToBody = true;
+            else if (addToBody)
+                body.Add(line);
+            else
+                headers.Add(line);
+        }
+
+        return new Article
+        {
+            Headers = headers.ToArray(),
+            Body = body.ToArray()
+        };
+    }
+
     public static Article Parse(string text, HeaderEncoding headerEncoding)
     {
         var lines = text.Split('\n');

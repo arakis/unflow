@@ -1,6 +1,9 @@
+using Unflow.ArticleBlobStorage;
 using Unflow.Cli;
 using Usenet.Nntp;
+using Usenet.Nntp.Builders;
 using Usenet.Nntp.Models;
+using Usenet.Nntp.Parsers;
 
 public class RemoteNntpClient : IRemoteNntpClient
 {
@@ -32,6 +35,13 @@ public class RemoteNntpClient : IRemoteNntpClient
     {
         var response = _client.ListActive();
         return response.Groups.Select(x => ConvertToRemoteGroupInfo(x)).ToArray();
+    }
+
+    public Article GetArticle(string messageId)
+    {
+        var response = _connection.MultiLineCommand<CustomNntpArticleResponse>(string.Format("ARTICLE {0}", messageId), (IMultiLineResponseParser<CustomNntpArticleResponse>)new CustomArticleResponseParser(null, CustomArticleRequestType.Article));
+        // var response = _client.Article(messageId);
+        return response.Article;
     }
 
     private static RemoteGroupInfo ConvertToRemoteGroupInfo(NntpGroup nativeRemoteGroup)

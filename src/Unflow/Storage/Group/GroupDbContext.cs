@@ -23,5 +23,5 @@ public class GroupDbContext : DbContext
             b => b.MigrationsAssembly("Unflow.GroupDbMigrations"));
     }
 
-    public DbSet<ArticleHeader> Article { get; set; }
+    public DbSet<ArticleHeader> ArticleHeader { get; set; }
 }
