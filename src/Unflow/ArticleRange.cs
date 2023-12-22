@@ -1,13 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualBasic;
 
-[method: SetsRequiredMembers]
 public readonly struct ArticleRange
 {
     public readonly long Start;
     public readonly long End;
     public long Length => End - Start + 1;
 
+    [SetsRequiredMembers]
     private ArticleRange(long start, long end)
     {
         Start = start;

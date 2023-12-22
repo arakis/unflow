@@ -21,6 +21,9 @@ public class HeaderEncoding
         AddKnownHeader("l", "Content-Language");
         AddKnownHeader("y", "In-Reply-To");
         AddKnownHeader("F", "Xref");
+        AddKnownHeader("o", "Organization");
+        AddKnownHeader("w", "Followup-To");
+        AddKnownHeader("P", "X-Orig-Path");
     }
 
     private static void AddKnownHeader(string encodedName, string decodedName)
